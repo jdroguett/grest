@@ -1,14 +1,3 @@
-# GRest
-
-A simple RESTful API framework for Go programming language
-
-## Install
-
-go get github.com/jdroguett/grest
-
-## Use
-
-```go
 package main
 
 import (
@@ -56,14 +45,27 @@ func (city *CityController) Destroy(w http.ResponseWriter, req *http.Request) {
 	io.WriteString(w, fmt.Sprintf("CityController destroy with id == %v \n", req.Form.Get("id")))
 }
 
-func main() {
-	grest := grest.New()
-	grest.Resources("/cities", &CityController{})
-	http.ListenAndServe(":4000", nil)
+//Country is my resource
+type Country struct {
+	id   int
+	name string
 }
 
-```
+//CountryController is my controller
+type CountryController struct {
+	Db *sql.DB
+}
 
-## Example
+//Index is the implementation of the action.
+func (country *CountryController) Index(w http.ResponseWriter, req *http.Request) {
+	io.WriteString(w, "Country Controller index\n")
+}
 
-View source /example/cities.go
+func main() {
+	grest := grest.New()
+	//nota: crea la función Resources debe recibir una interface, algo similar a https://golang.org/pkg/net/http/#Handler
+	grest.Resources("/cities", &CityController{})
+	grest.Resources("/countries", &CountryController{})
+
+	http.ListenAndServe(":4000", nil)
+}

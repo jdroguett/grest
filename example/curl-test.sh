@@ -1,0 +1,11 @@
+#!/bin/sh
+echo "[index]"
+curl -X GET "http://localhost:4000/cities"
+echo "[show]"
+curl -X GET "http://localhost:4000/cities/3424"
+echo "[create]"
+curl -X POST "http://localhost:4000/cities"
+echo "[update]"
+curl -X PATCH "http://localhost:4000/cities/4334"
+echo "[destroy]"
+curl -X DELETE "http://localhost:4000/cities/4334"
