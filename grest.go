@@ -68,7 +68,7 @@ func (c *Controller) resourcesHandler(actions interface{}, pattern string) http.
 		req.ParseForm()
 		path := req.URL.Path
 
-		var handler func(w http.ResponseWriter, req *http.Request)
+		var handler http.HandlerFunc
 		id, hasID := getID(pattern, path)
 		switch req.Method {
 		case get:
